@@ -2,18 +2,29 @@
 <html>
 <head>
   <meta charset="utf-8">
-  <title>Opening App...</title>
+  <title>Redirecting…</title>
   <script>
-    var ref = new URLSearchParams(window.location.search).get("ref") || "";
-    var deepLink = "noguns://open?ref=" + encodeURIComponent(ref);
-    window.location = deepLink;
+    // Extract all parameters
+    const params = new URLSearchParams(window.location.search);
+    const queryParts = [];
 
+    for (const [key, value] of params.entries()) {
+      queryParts.push(`${encodeURIComponent(key)}=${encodeURIComponent(value)}`);
+    }
+
+    const fullQuery = queryParts.join("&");
+    const deepLinkUrl = "noguns://open" + (fullQuery ? "?" + fullQuery : "");
+
+    // Redirect to deep link
+    window.location = deepLinkUrl;
+
+    // Fallback to Play Store
     setTimeout(function () {
       window.location = "https://play.google.com/store/apps/details?id=com.GLITCH_MONSTER.NO_GUNS";
     }, 1500);
   </script>
 </head>
 <body>
-  <p>Launching app…</p>
+  <p>Opening the app…</p>
 </body>
 </html>
